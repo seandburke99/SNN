@@ -2,14 +2,8 @@
 #define SNN_CONFIG_H
 #include <stdint.h>
 
-typedef enum{
-    INT8,
-    UINT8,
-    INT16,
-    UINT16,
-    FLOAT,
-    DOUBLE
-} TYPE;
-
+#define SNNTYPE_INT16
+//#define MULTITHREADING
+//#define SNNTYPE_FLOAT
 
 #endif

@@ -5,14 +5,14 @@
 # Compiler settings - Can be customized.
 CC = gcc
 CXXFLAGS = -std=c11 -Wall
-LDFLAGS = 
+LDFLAGS = -I$(INCDIR)
 
 # Makefile settings - Can be customized.
 APPNAME = SNN
 EXT = .c
 SRCDIR = src
 OBJDIR = obj
-INCDIR = include/$(APPNAME)
+INCDIR = include
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))

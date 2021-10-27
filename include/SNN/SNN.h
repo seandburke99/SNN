@@ -1,4 +1,4 @@
-#include <SNN_Config.h>
+#include <SNN/SNN_Config.h>
 
 typedef struct Network {
     
