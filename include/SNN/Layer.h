@@ -7,16 +7,17 @@
 typedef void(*ActivationFunction)(int16_t *data, size_t size);
 
 typedef struct Layer{
-    int16_t* nodes;
+    char* name;
+    int16_t* dims;
+    int16_t numDims;
     int16_t* weights;
-    int16_t numNodes;
     ActivationFunction act;
 } Layer;
 
-int16_t* layer_forward(const Layer* l, const int16_t* data, size_t* dataLen);
-
-Layer create_layer(size_t* dimensions, void (*activation_function)(int16_t *data, size_t size));
+int16_t* layer_forward(const Layer* l, const int16_t* data);
 #endif
 
+Layer create_layer();
+void destroy_layer(Layer *l);
 
 #endif
