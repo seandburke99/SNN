@@ -9,7 +9,7 @@ int16_t* layer_forward(const Layer* l, const int16_t* data){
     for(int i=0;i<l->dims[1];i++){
         _data[i] = 0;
         for(int j=0;j< l->dims[0];j++){
-            _data[i] += data[j]*l->weights[i*j];
+            _data[i] += data[j]*l->weights[i*j+j];
         }
     }
     l->act(_data, l->dims[1]);

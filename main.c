@@ -1,5 +1,4 @@
-#include <SNN/Graph.h>
-#include <SNN/Activations.h>
+#include <SNN/SNN.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,7 +9,7 @@ int main(void){
     init_layers(&NN);
     printf("Layers Created\n");
     graph_summarize(&NN);
-    int16_t data[] = {32767, 32767, 32767, 32767};
+    int16_t data[] = {1, 1, 1, 1};
     int16_t* ret;
     ret = forward(&NN, data);
     printf("Data was passed through\n");
@@ -19,13 +18,13 @@ int main(void){
     }
     printf("\n");
     destroy_graph(&NN);
+    free(ret);
     return 0;
 }
 
 void init_layers(Graph* model){
     model->name = calloc(3, sizeof(char));
     model->name = "AC\0";
-
 
     Layer l = create_layer();
 
@@ -35,7 +34,8 @@ void init_layers(Graph* model){
     l.dims = malloc(sizeof(int16_t)*l.numDims);
     l.dims[0] = (int16_t)4;
     l.dims[1] = 4;
-    l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    //l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    l.weights = malloc(l.dims[0] * l.dims[1]*sizeof(int16_t));
     l.act = ReLu;
     add_layer(model, l);
 
@@ -46,7 +46,8 @@ void init_layers(Graph* model){
     l.dims = malloc(sizeof(int16_t)*l.numDims);
     l.dims[0] = 4;
     l.dims[1] = 16;
-    l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    //l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    l.weights = malloc(l.dims[0] * l.dims[1]*sizeof(int16_t));
     l.act = ReLu;
     add_layer(model, l);
 
@@ -57,7 +58,8 @@ void init_layers(Graph* model){
     l.dims = malloc(sizeof(int16_t)*l.numDims);
     l.dims[0] = 16;
     l.dims[1] = 2;
-    l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    //l.weights = calloc(l.dims[0] * l.dims[1], sizeof(int16_t));
+    l.weights = malloc(l.dims[0] * l.dims[1]*sizeof(int16_t));
     l.act = ReLu;
     add_layer(model, l);
     return;

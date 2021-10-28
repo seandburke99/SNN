@@ -1,5 +1,4 @@
 #include <SNN/Graph.h>
-#include <SNN/Layer.h>
 #include <stdio.h>
 #include <stdlib.h>
 
