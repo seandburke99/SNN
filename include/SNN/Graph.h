@@ -7,10 +7,12 @@
 typedef struct Graph{
     Layer *layers;
     uint16_t numLayers;
-    uint8_t compiled;
 } Graph;
 
-int16_t* forward(const Graph* model, const int16_t* data, size_t size);
+int16_t* forward(const Graph* model, const int16_t* data, size_t* size);
+
+int8_t add_layer(Graph* model, Layer l);
 #endif
+
 
 #endif

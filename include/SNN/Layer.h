@@ -13,7 +13,9 @@ typedef struct Layer{
     ActivationFunction act;
 } Layer;
 
-int16_t* layer_forward(const Layer* l, const int16_t* data, size_t dataLen);
+int16_t* layer_forward(const Layer* l, const int16_t* data, size_t* dataLen);
+
+Layer create_layer(size_t* dimensions, void (*activation_function)(int16_t *data, size_t size));
 #endif
 
 
