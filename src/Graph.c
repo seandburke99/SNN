@@ -18,7 +18,7 @@ void graph_summarize(const Graph* model){
     for(int i=0;i<model->numLayers;i++){
         printf("%s: ", model->layers[i].name);
         printf("%hd dims = ", model->layers[i].numDims);
-        printf("%hdx%hd\n", model->layers[i].dims[0], model->layers[1].dims[1]);
+        printf("%dx%d\n", model->layers[i].dims[0], model->layers[i].dims[1]);
     }
 }
 #endif
@@ -30,11 +30,9 @@ Graph create_graph(){
 }
 
 int8_t add_layer(Graph* model, Layer l){
-    Layer* ls = malloc(sizeof(Layer)*(model->numLayers+1));
-    printf("Created layers pointer\n");
+    Layer* ls = calloc((model->numLayers+1), sizeof(Layer));
     if(model->numLayers){
         memcpy(ls, model->layers, sizeof(Layer)*model->numLayers);
-        printf("Copied old layers\n");
     }
     memcpy(&ls[model->numLayers], &l, sizeof(Layer));
     model->layers = ls;
