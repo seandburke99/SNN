@@ -2,6 +2,7 @@
 
 #ifdef SNNTYPE_INT16
 void ReLu(int16_t *data, size_t size){
+    //Loop through all values 
     for(int i=0;i<size;i++){
         if(data[i]<0) data[i]=0;
     }

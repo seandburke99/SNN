@@ -12,10 +12,12 @@
 #include <string.h>
 
 #ifdef SNNTYPE_INT16
+
+//Structure to contain the full network
 typedef struct Graph{
-    char* name;
-    Layer *layers;
-    uint16_t numLayers;
+    char* name;             //Name of the netural network
+    Layer *layers;          //Pointer to array of layers for the network
+    uint16_t numLayers;     //Counter for the number of layers in a network
 } Graph;
 
 /*
