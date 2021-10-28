@@ -15,8 +15,6 @@ int16_t* layer_forward(const Layer* l, const int16_t* data){
     l->act(_data, l->dims[1]);
     return _data;
 }
-
-
 #endif
 
 Layer create_layer(){
