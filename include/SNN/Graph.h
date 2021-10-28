@@ -10,7 +10,7 @@ typedef struct Graph{
     uint8_t compiled;
 } Graph;
 
-void forward(Graph *model, uint16_t *data, size_t size);
+int16_t* forward(const Graph* model, const int16_t* data, size_t size);
 #endif
 
 #endif

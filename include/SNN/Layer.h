@@ -4,13 +4,16 @@
 #include <stddef.h>
 
 #ifdef SNNTYPE_INT16
+typedef void(*ActivationFunction)(int16_t *data, size_t size);
+
 typedef struct Layer{
     int16_t* nodes;
     int16_t* weights;
     int16_t numNodes;
+    ActivationFunction act;
 } Layer;
 
-void layer_forward(Layer* l, int16_t* data, size_t dataLen);
+int16_t* layer_forward(const Layer* l, const int16_t* data, size_t dataLen);
 #endif
 
 
