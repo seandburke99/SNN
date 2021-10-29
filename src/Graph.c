@@ -4,12 +4,15 @@
 
 #ifdef SNNTYPE_INT16
 int16_t* forward(const Graph* model, const int16_t* data){
-    int16_t* _data;
-    _data = layer_forward(&model->layers[0], data);
+    int16_t* d1;
+    int16_t* d2;
+    d1 = layer_forward(&model->layers[0], data);
     for(int i=1;i<model->numLayers;i++){
-        _data = layer_forward(&model->layers[i], _data);
+        d2 = layer_forward(&model->layers[i], d1);
+        free(d1);
+        d1 = d2;
     }
-    return _data;
+    return d1;
 }
 
 void graph_summarize(const Graph* model){
