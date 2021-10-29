@@ -17,7 +17,7 @@ typedef struct Layer{
 int16_t* layer_forward(const Layer* l, const int16_t* data);
 #endif
 
-Layer create_layer();
+Layer* create_layer();
 void destroy_layer(Layer *l);
 
 #endif

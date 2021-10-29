@@ -47,7 +47,7 @@ int16_t* forward(const Graph* model, const int16_t* data);
  *
  *  returs: None
  */
-Graph create_graph();
+Graph* create_graph();
 
 /*
  * Function:  TanH 

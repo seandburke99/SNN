@@ -4,7 +4,8 @@
 
 #ifdef SNNTYPE_INT16
 
-uint8_t init_mat(Matrix* mat, size_t h, size_t w, int16_t a[h][w]){
+Matrix* init_mat(size_t h, size_t w, int16_t a[h][w]){
+    Matrix* mat = malloc(sizeof(Matrix));
     mat->h = h;
     mat->w = w;
     mat->data = malloc(h*sizeof(int16_t*));
@@ -16,54 +17,62 @@ uint8_t init_mat(Matrix* mat, size_t h, size_t w, int16_t a[h][w]){
                     mat->data[i][j] = a[i][j];
                 }
             }else{
-                return 1;
+                return NULL;
             }
         }
     }
     else{
-        return 1;
+        return NULL;
     }
-    return 0;
+    return mat;
 }
 
-uint8_t scalarxvect(Vector* dst, const int16_t sc, const Vector* a){
+Vector* scalarxvect(const int16_t sc, const Vector* a){
+    Vector* dst = malloc(sizeof(Vector));
     dst->n = a->n;
     dst->data = malloc(sizeof(a->data[0])*dst->n);
+    if(dst->data){
     for(int i=0;i<a->n;i++){
         dst->data[i] = a->data[i]*sc;
     }
-    return 0;
+    }else{
+        return NULL;
+    }
+    return dst;
 }
 
-uint8_t vecxvecdot(int16_t* dst, const Vector* a, const Vector* b){
+int16_t* vecxvecdot(const Vector* a, const Vector* b){
+    int16_t* dst = malloc(sizeof(int16_t));
     if(a->n==b->n){
         *dst = 0;
         for(int i=0;i<a->n;i++){
             *dst += a->data[i] * b->data[i];
         }
     }else{
-        return 1;
+        return NULL;
     }
-    return 0;
+    return dst;
 }
 
-uint8_t vecxmatdot(Vector* dst, const Vector* a, const Matrix* b){
+Vector* vecxmatdot(const Vector* a, const Matrix* b){
+    Vector* dst = malloc(sizeof(Vector));
     dst->n = b->w;
     dst->data = malloc(sizeof(int16_t)*dst->n);
     if(a->n != b->h){
-        return 1;
+        return NULL;
     }
     for(int j=0;j< b->w;j++){
         for(int i=0;i<b->h;i++){
             dst->data[j] = a->data[i]*b->data[i][j];
         }
     }
-    return 0;
+    return dst;
 }
 
-uint8_t matxmatdot(Matrix* dst, const Matrix* a, const Matrix* b){
+Matrix* matxmatdot(const Matrix* a, const Matrix* b){
+    Matrix* dst = malloc(sizeof(Matrix));
     if(a->w != b->h){
-        return 1;
+        return NULL;
     }
     dst->w = b->w;
     dst->h = a->h;
@@ -78,13 +87,25 @@ uint8_t matxmatdot(Matrix* dst, const Matrix* a, const Matrix* b){
                     }
                 }
             }else{
-                return 1;
+                return NULL;
             }
         }
     }else{
-        return 1;
+        return NULL;
     }
-    return 0;
+    return dst;
 }
 
 #endif
+
+void destory_vector(Vector* src){
+    free(src->data);
+    free(src);
+    src = NULL;
+}
+
+void destory_matrix(Matrix* src){
+    free(src->data);
+    free(src);
+    src = NULL;
+}

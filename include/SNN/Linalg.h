@@ -16,12 +16,14 @@ typedef struct Matrix{
     int16_t** data;
 } Matrix;
 
-uint8_t init_mat(Matrix* mat, size_t h, size_t w, int16_t a[h][w]);
-uint8_t scalarxvect(Vector*dst, const int16_t sc, const Vector* a);
-uint8_t vecxvecdot(int16_t* dst, const Vector* a, const Vector* b);
-uint8_t vecxmatdot(Vector* dst, const Vector* a, const Matrix* b);
-uint8_t matxmatdot(Matrix* dst, const Matrix* a, const Matrix* b);
-
+Matrix* init_mat(size_t h, size_t w, int16_t a[h][w]);
+Vector* scalarxvect(const int16_t sc, const Vector* a);
+int16_t* vecxvecdot(const Vector* a, const Vector* b);
+Vector* vecxmatdot(const Vector* a, const Matrix* b);
+Matrix* matxmatdot(const Matrix* a, const Matrix* b);
 #endif
+
+void destory_vector(Vector* src);
+void destory_matrix(Matrix* src);
 
 #endif

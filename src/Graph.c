@@ -24,10 +24,10 @@ void graph_summarize(const Graph* model){
     }
 }
 #endif
-Graph create_graph(){
-    Graph model;
-    model.layers = NULL;
-    model.numLayers = 0;
+Graph* create_graph(){
+    Graph* model = malloc(sizeof(Graph));
+    model->layers = NULL;
+    model->numLayers = 0;
     return model;
 }
 
@@ -47,4 +47,5 @@ void destroy_graph(Graph* model){
         destroy_layer(&model->layers[i]);
     }
     free(model->layers);
+    free(model);
 }

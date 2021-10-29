@@ -17,17 +17,21 @@ int16_t* layer_forward(const Layer* l, const int16_t* data){
 }
 #endif
 
-Layer create_layer(){
-    Layer l;
-    l.act = NULL;
-    l.dims = NULL;
+Layer* create_layer(){
+    Layer* l = malloc(sizeof(Layer));
+    if(!l){
+        return NULL;
+    }
+    l->act = NULL;
+    l->dims = NULL;
     //l.name = NULL;
-    l.numDims = 0;
-    l.weights = NULL;
+    l->numDims = 0;
+    l->weights = NULL;
     return l;
 }
 
 void destroy_layer(Layer *l){
     free(l->weights);
     free(l->dims);
+    free(l);
 }
