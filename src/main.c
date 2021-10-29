@@ -6,16 +6,6 @@
 void init_layers(Graph* model);
 
 int main(void){
-    // int16_t *a[3] = {
-    //     (int16_t[]){2, 3},
-    //     (int16_t[]){3, 3},
-    //     (int16_t[]){2, 4}
-    // };
-    // aM.data = a;
-    // int16_t *b[2] = {
-    //     (int16_t[]){2, 3, 1},
-    //     (int16_t[]){3, 4, 2},
-    // };
     int16_t a[3][5] = {
         {2, 3, 4, 2, 7},
         {3, 3, 6, 2, 8},
@@ -28,9 +18,10 @@ int main(void){
         {3, 4, 2, 0},
         {2, 3, 1, 4}
     };
-    Matrix aM = init_mat(3, 5, a);
-    Matrix bM = init_mat(5, 4, b);
-    Matrix res = matxmatdot(&aM, &bM);
+    Matrix aM, bM, res;
+    init_mat(&aM, 3, 5, a);
+    init_mat(&bM, 5, 4, b);
+    matxmatdot(&res, &aM, &bM);
     for(int i=0;i<res.h;i++){
         for(int j=0;j<res.w;j++){
             printf("%hd ", res.data[i][j]);

@@ -57,3 +57,14 @@ clean:
 .PHONY: cleandep
 cleandep:
 	$(DEL) $(DEP)
+
+#################### Cleaning rules for Mac OS #####################
+# Cleans complete project
+.PHONY: cleanm
+cleanm:
+	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+
+# Cleans only all files with the extension .d
+.PHONY: cleandepm
+cleandepm:
+	$(RM) $(DEP)
