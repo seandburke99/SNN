@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "linalg.h": "c"
+        "linalg.h": "c",
+        "snn_config.h": "c"
     }
 }

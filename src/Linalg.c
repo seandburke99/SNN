@@ -4,27 +4,27 @@
 
 #ifdef SNNTYPE_INT16
 
-Matrix* init_mat(size_t h, size_t w, int16_t a[h][w]){
-    Matrix* mat = malloc(sizeof(Matrix));
+Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]){
+    Matrix* mat = malloc(sizeof(Matrix)); //Allocate new memory for matrix struct
     mat->h = h;
     mat->w = w;
-    mat->data = malloc(h*sizeof(int16_t*));
+    mat->data = malloc(h*sizeof(int16_t*)); //Allocate row pointers
     if(mat->data){
         for(int i=0;i<h;i++){
-            mat->data[i] = malloc(w*sizeof(int16_t));
+            mat->data[i] = malloc(w*sizeof(int16_t)); //Allocate column pointers
             if(mat->data[i]){
                 for(int j=0;j<w;j++){
-                    mat->data[i][j] = a[i][j];
+                    mat->data[i][j] = a[i][j]; //Set cell to equivalent cell
                 }
             }else{
-                return NULL;
+                return NULL; //Quit if unable to allocate memory
             }
         }
     }
     else{
-        return NULL;
+        return NULL; //Quit if unable to allocate memory
     }
-    return mat;
+    return mat; //Return pointer to new matrix struct
 }
 
 Vector* scalarxvect(const int16_t sc, const Vector* a){
@@ -98,13 +98,13 @@ Matrix* matxmatdot(const Matrix* a, const Matrix* b){
 
 #endif
 
-void destory_vector(Vector* src){
+void destroy_vector(Vector* src){
     free(src->data);
     free(src);
     src = NULL;
 }
 
-void destory_matrix(Matrix* src){
+void destroy_matrix(Matrix* src){
     free(src->data);
     free(src);
     src = NULL;
