@@ -52,14 +52,48 @@ Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]);
  */
 Matrix* init_matFB(size_t h, size_t w, const int16_t a[]);
 
-
+/*
+ * Function that is meant to multiply a vector by a scalar value
+ * sc: scalar 16 bit integer value
+ * a: Vector structure
+ *
+ * returns: pointer to new vector struct with new data values
+ *          null if memory is unable to be allocated
+ */
 Vector* scalarxvect(const int16_t sc, const Vector* a);
+
+/*
+ * Function that is meant to multiply a vector by a vector
+ * a: Vector structure
+ * b: Vecotr structure
+ *
+ * returns: pointer to a 16 bit integer result
+ *          null if memory is unable to be allocated or vectors are
+ *          uncompatible
+ */
 int16_t* vecxvecdot(const Vector* a, const Vector* b);
+
+/*
+ * Function that is meant to multiply a vector by a compatible matrix
+ * a: Vector structure
+ * b: Matrix structure
+ *
+ * returns: pointer to a new matrix structure
+ *          null if memory is unable to be allocated or structures are
+ *          uncompatible
+ */
 Vector* vecxmatdot(const Vector* a, const Matrix* b);
+
+/*
+ * Function that is meant to multiply a matrix by a compatible matrix
+ * a: matrix structure
+ * b: matrix structure
+ *
+ * returns: pointer to a new matrix structure
+ *          null if memory is unable to be allocated or matricies are
+ *          uncompatible
+ */
 Matrix* matxmatdot(const Matrix* a, const Matrix* b);
 #endif
-
-void destroy_vector(Vector* src);
-void destroy_matrix(Matrix* src);
 
 #endif

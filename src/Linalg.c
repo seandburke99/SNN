@@ -97,15 +97,3 @@ Matrix* matxmatdot(const Matrix* a, const Matrix* b){
 }
 
 #endif
-
-void destroy_vector(Vector* src){
-    free(src->data);
-    free(src);
-    src = NULL;
-}
-
-void destroy_matrix(Matrix* src){
-    free(src->data);
-    free(src);
-    src = NULL;
-}

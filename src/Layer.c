@@ -33,5 +33,4 @@ Layer* create_layer(){
 void destroy_layer(Layer *l){
     free(l->weights);
     free(l->dims);
-    free(l);
 }
