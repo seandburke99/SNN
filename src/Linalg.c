@@ -2,16 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef SNNTYPE_INT16
-
-Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]){
+Matrix* init_mat(size_t h, size_t w, const SNNTYPE a[h][w]){
     Matrix* mat = malloc(sizeof(Matrix)); //Allocate new memory for matrix struct
     mat->h = h;
     mat->w = w;
-    mat->data = malloc(h*sizeof(int16_t*)); //Allocate row pointers
+    mat->data = malloc(h*sizeof(SNNTYPE*)); //Allocate row pointers
     if(mat->data){
         for(int i=0;i<h;i++){
-            mat->data[i] = malloc(w*sizeof(int16_t)); //Allocate column pointers
+            mat->data[i] = malloc(w*sizeof(SNNTYPE)); //Allocate column pointers
             if(mat->data[i]){
                 for(int j=0;j<w;j++){
                     mat->data[i][j] = a[i][j]; //Set cell to equivalent cell
@@ -27,7 +25,7 @@ Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]){
     return mat; //Return pointer to new matrix struct
 }
 
-Vector* scalarxvect(const int16_t sc, const Vector* a){
+Vector* scalarxvect(const SNNTYPE sc, const Vector* a){
     Vector* dst = malloc(sizeof(Vector));
     dst->n = a->n;
     dst->data = malloc(sizeof(a->data[0])*dst->n);
@@ -41,8 +39,8 @@ Vector* scalarxvect(const int16_t sc, const Vector* a){
     return dst;
 }
 
-int16_t* vecxvecdot(const Vector* a, const Vector* b){
-    int16_t* dst = malloc(sizeof(int16_t));
+SNNTYPE* vecxvecdot(const Vector* a, const Vector* b){
+    SNNTYPE* dst = malloc(sizeof(SNNTYPE));
     if(a->n==b->n){
         *dst = 0;
         for(int i=0;i<a->n;i++){
@@ -57,7 +55,7 @@ int16_t* vecxvecdot(const Vector* a, const Vector* b){
 Vector* vecxmatdot(const Vector* a, const Matrix* b){
     Vector* dst = malloc(sizeof(Vector));
     dst->n = b->w;
-    dst->data = malloc(sizeof(int16_t)*dst->n);
+    dst->data = malloc(sizeof(SNNTYPE)*dst->n);
     if(a->n != b->h){
         return NULL;
     }
@@ -76,10 +74,10 @@ Matrix* matxmatdot(const Matrix* a, const Matrix* b){
     }
     dst->w = b->w;
     dst->h = a->h;
-    dst->data = calloc(dst->h, sizeof(int16_t*));
+    dst->data = calloc(dst->h, sizeof(SNNTYPE*));
     if(dst->data){
         for(int i=0;i<dst->h;i++){
-            dst->data[i] = calloc(dst->w, sizeof(int16_t));
+            dst->data[i] = calloc(dst->w, sizeof(SNNTYPE));
             if(dst->data[i]){
                 for(int j=0;j<dst->w;j++){
                     for(int k=0;k<a->w;k++){
@@ -95,5 +93,3 @@ Matrix* matxmatdot(const Matrix* a, const Matrix* b){
     }
     return dst;
 }
-
-#endif

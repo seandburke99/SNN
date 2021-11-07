@@ -1,24 +1,57 @@
 #include <SNN/SNN.h>
 #include <SNN/Linalg.h>
+#include <SNN/main.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+Graph *init_test(void);
+
 int main(void){
-    int16_t a = 2;
-    Vector b, c;
-    b.data = calloc(12, sizeof(int16_t));
-    b.n = 12;
-    printf("Before: ");
-    for(int i=0;i<b.n;i++){
-        b.data[i] = 1;
-        printf("%hd ", b.data[i]);
+    Graph *model = init_test();
+    graph_summarize(model);
+    int32_t data[] = {255, 255, 255, 255, 255, 255, 255, 255};
+    int32_t *ret = forward(model, data);
+    for(int i=0;i<2;i++){
+        printf("%d ", ret[i]);
     }
     printf("\n");
-    c = *scalarxvect(8, &b);
-    printf("After: ");
-    for(int i=0;i<c.n;i++){
-        printf("%hd ", c.data[i]);
-    }
-    printf("\n");
+    free(ret);
     return 0;
+}
+
+
+Graph *init_test(void){
+    Graph *model = create_graph();
+
+    Layer l = create_layer();
+    l.act = TanH;
+    l.numDims = 2;
+    l.dims = malloc(2*sizeof(size_t));
+    l.dims[0] = 8;
+    l.dims[1] = 10;
+    l.weights = weight0;
+    l.bias = bias0;
+    add_layer(model, l);
+
+    l = create_layer();
+    l.act = TanH;
+    l.numDims = 2;
+    l.dims = malloc(2*sizeof(size_t));
+    l.dims[0] = 10;
+    l.dims[1] = 10;
+    l.weights = weight1;
+    l.bias = bias1;
+    add_layer(model, l);
+
+    l = create_layer();
+    l.act = TanH;
+    l.numDims = 2;
+    l.dims = malloc(2*sizeof(size_t));
+    l.dims[0] = 10;
+    l.dims[1] = 2;
+    l.weights = weight2;
+    l.bias = bias2;
+    add_layer(model, l);
+
+    return model;
 }

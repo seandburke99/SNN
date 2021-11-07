@@ -15,9 +15,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-//If the desired network type is 16 bit ints
-#ifdef SNNTYPE_INT16
-
 /*
  * Implements the (Re)ctified (L)inear (U)nit function on input data:
  * data: items to pass through the function
@@ -25,7 +22,7 @@
  *
  * returns: None
  */
-void ReLu(int16_t* data, size_t size);
+void ReLu(SNNFTYPE* data, size_t size);
 
 /*
  * Implements a modified Sigmoid function on input data that scales the value from 0 to 32767
@@ -35,7 +32,7 @@ void ReLu(int16_t* data, size_t size);
  *
  * returns: None
  */
-void Sigmoid(int16_t *data, size_t size);
+void Sigmoid(SNNFTYPE *data, size_t size);
 
 /*
  * Implements a modified TanH function on input data that scales the value to the positive
@@ -45,7 +42,6 @@ void Sigmoid(int16_t *data, size_t size);
  *
  * returs: None
  */
-void TanH(int16_t *data, size_t size);
-#endif
+void TanH(SNNFTYPE *data, size_t size);
 
 #endif

@@ -15,19 +15,17 @@
 #include <SNN/SNN_Config.h>
 #include <stddef.h>
 
-#ifdef SNNTYPE_INT16
-
 //Basic vector struct with size and data
 typedef struct Vector{
-    uint16_t n;             //Length or size
-    int16_t* data;          //Pointer to data
+    size_t n;             //Length or size
+    SNNTYPE* data;          //Pointer to data
 } Vector;
 
 //Basic matrix implementation with height, width, and data
 typedef struct Matrix{
     uint16_t w;             //Width
     uint16_t h;             //Height
-    int16_t** data;         //Pointer to data
+    SNNTYPE** data;         //Pointer to data
 } Matrix;
 
 /*
@@ -38,7 +36,7 @@ typedef struct Matrix{
  *
  * returns: pointer to new matrix struct with initialized data values
  */
-Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]);
+Matrix* init_mat(size_t h, size_t w, const SNNTYPE a[h][w]);
 
 /*
  * [NOTICE]: Not yet implemented. Declared only. DO NOT CALL.
@@ -50,7 +48,7 @@ Matrix* init_mat(size_t h, size_t w, const int16_t a[h][w]);
  *
  * returns: pointer to new matrix struct with initialized data values
  */
-Matrix* init_matFB(size_t h, size_t w, const int16_t a[]);
+Matrix* init_matFB(size_t h, size_t w, const SNNTYPE a[]);
 
 /*
  * Function that is meant to multiply a vector by a scalar value
@@ -60,7 +58,7 @@ Matrix* init_matFB(size_t h, size_t w, const int16_t a[]);
  * returns: pointer to new vector struct with new data values
  *          null if memory is unable to be allocated
  */
-Vector* scalarxvect(const int16_t sc, const Vector* a);
+Vector* scalarxvect(const SNNTYPE sc, const Vector* a);
 
 /*
  * Function that is meant to multiply a vector by a vector
@@ -71,7 +69,7 @@ Vector* scalarxvect(const int16_t sc, const Vector* a);
  *          null if memory is unable to be allocated or vectors are
  *          uncompatible
  */
-int16_t* vecxvecdot(const Vector* a, const Vector* b);
+SNNTYPE* vecxvecdot(const Vector* a, const Vector* b);
 
 /*
  * Function that is meant to multiply a vector by a compatible matrix
@@ -94,6 +92,5 @@ Vector* vecxmatdot(const Vector* a, const Matrix* b);
  *          uncompatible
  */
 Matrix* matxmatdot(const Matrix* a, const Matrix* b);
-#endif
 
 #endif

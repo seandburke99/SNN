@@ -16,13 +16,11 @@
 #include <stddef.h>
 #include <string.h>
 
-#ifdef SNNTYPE_INT16
-
 //Structure to contain the full network
 typedef struct Graph{
     char* name;             //Name of the netural network
-    Layer *layers;          //Pointer to array of layers for the network
-    uint16_t numLayers;     //Counter for the number of layers in a network
+    Layer *layers;         //Pointer to array of layers for the network
+    size_t numLayers;     //Counter for the number of layers in a network
 } Graph;
 
 /*
@@ -32,8 +30,7 @@ typedef struct Graph{
  *
  * returns: pointer to graph output
  */
-int16_t* forward(const Graph* model, const int16_t* data);
-#endif
+SNNFTYPE* forward(const Graph* model, const SNNFTYPE* data);
 
 /*
  * Function that creates a new graph structure and initializes
@@ -58,7 +55,7 @@ void destroy_graph(Graph* model);
  *
  * returns: 0 if successful, otherwise if not
  */
-int8_t add_layer(Graph* model, const Layer l);
+uint8_t add_layer(Graph* model, const Layer l);
 
 /*
  * Function to print out full graph structure

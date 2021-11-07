@@ -3,16 +3,16 @@
 #include <SNN/SNN_Config.h>
 #include <stddef.h>
 
-#ifdef SNNTYPE_INT16
 //Definition of activation function pointer for use in layer struct
-typedef void(*ActivationFunction)(int16_t *data, size_t size);
+typedef void(*ActivationFunction)(SNNFTYPE *data, size_t size);
 
 //Layer structure
 typedef struct Layer{
     char *name; //Name of the layer (unlikely to be useful on embedded devices)
-    int16_t *dims; //Pointer to array that defines dimension sizes
-    int16_t numDims; //Number of dimensions to layer
-    int16_t *weights; //Pointer to flat weights buffer (Possible change to matrix)
+    size_t *dims; //Pointer to array that defines dimension sizes
+    size_t numDims; //Number of dimensions to layer
+    SNNTYPE *weights; //Pointer to flat weights buffer (Possible change to matrix)
+    SNNTYPE *bias;
     ActivationFunction act; //Pointer to activation function
 } Layer; //Name struct "Layer"
 
@@ -23,15 +23,14 @@ typedef struct Layer{
  *
  * returns: pointer to new data array
  */
-int16_t* layer_forward(const Layer *l, const int16_t *data);
-#endif
+SNNFTYPE* layer_forward(const Layer *l, const SNNFTYPE *data);
 
 /*
  * Function that is meant to create a new layer, initialized to 0
  *
  * returns: Pointer to new layer structure
  */
-Layer* create_layer();
+Layer create_layer();
 
 /*
  * Function that is meant to free all memory associated with layer structure pointer
@@ -42,3 +41,13 @@ Layer* create_layer();
 void destroy_layer(Layer *l);
 
 #endif
+
+/*
+ *
+ * Neural network linear structure has previous size across and current size down
+ * For example, 8->10 nodes has the matrix shape [10,8] 10 rows, 8 columns
+ * For example, 10->2 nodes has the matrix shape [2, 10] 2 rows, 10 columns
+ * Following this logic, the next layers first node has it valued multiplied by the first row of weights
+ * based on how the sizes line up.
+ * 
+*/

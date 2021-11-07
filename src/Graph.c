@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef SNNTYPE_INT16
-int16_t* forward(const Graph* model, const int16_t* data){
-    int16_t* d1;
-    int16_t* d2;
+SNNFTYPE* forward(const Graph* model, const SNNFTYPE* data){
+    SNNFTYPE* d1;
+    SNNFTYPE* d2;
     d1 = layer_forward(&model->layers[0], data);
     for(int i=1;i<model->numLayers;i++){
         d2 = layer_forward(&model->layers[i], d1);
@@ -16,22 +15,34 @@ int16_t* forward(const Graph* model, const int16_t* data){
 }
 
 void graph_summarize(const Graph* model){
-    printf("%s\n\n", model->name);
+    if(model->name != NULL)
+        printf("%s\n\n", model->name);
     for(int i=0;i<model->numLayers;i++){
-        printf("%s: ", model->layers[i].name);
-        printf("%hd dims = ", model->layers[i].numDims);
-        printf("%dx%d\n", model->layers[i].dims[0], model->layers[i].dims[1]);
+        if(model->layers[i].name)
+            printf("%s: ", model->layers[i].name);
+        printf("%zd dims = ", model->layers[i].numDims);
+        printf("%zdx%zd\n", model->layers[i].dims[0], model->layers[i].dims[1]);
+        printf("Weights:\n");
+        int sum = 1;
+        for(int j=0;j<model->layers[i].numDims;j++){
+            sum *= model->layers[i].dims[j];
+        }
+        for(int j=0;j<sum;j++){
+            printf("%d ", model->layers[i].weights[j]);
+        }
+        printf("\n");
     }
 }
-#endif
+
 Graph* create_graph(){
     Graph* model = malloc(sizeof(Graph));
+    model->name = NULL;
     model->layers = NULL;
     model->numLayers = 0;
     return model;
 }
 
-int8_t add_layer(Graph* model, Layer l){
+uint8_t add_layer(Graph* model, Layer l){
     Layer* ls = calloc((model->numLayers+1), sizeof(Layer));
     if(model->numLayers){
         memcpy(ls, model->layers, sizeof(Layer)*model->numLayers);
