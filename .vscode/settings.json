@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "linalg.h": "c",
-        "snn_config.h": "c",
-        "complex": "c",
-        "cmath": "c"
-    }
-}
