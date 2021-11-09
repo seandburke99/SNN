@@ -5,7 +5,7 @@
 # Compiler settings - Can be customized.
 CC = gcc
 CXXFLAGS = -std=c11 -Wall
-LDFLAGS = -I$(INCDIR)
+LDFLAGS = -I$(INCDIR) -lm
 
 # Makefile settings - Can be customized.
 APPNAME = SNN
@@ -51,12 +51,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 # Cleans complete project
 .PHONY: clean
 clean:
-	$(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
+# $(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
+	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
 
 # Cleans only all files with the extension .d
 .PHONY: cleandep
 cleandep:
-	$(DEL) $(DEP)
+# $(DEL) $(DEP)
+	$(RM) $(DEP)
 
 #################### Cleaning rules for Mac OS #####################
 # Cleans complete project

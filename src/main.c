@@ -7,12 +7,12 @@
 Graph *init_test(void);
 
 int main(void){
+    SNNFTYPE data[] = {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
     Graph *model = init_test();
-    graph_summarize(model);
-    int32_t data[] = {255, 255, 255, 255, 255, 255, 255, 255};
-    int32_t *ret = forward(model, data);
+    //graph_summarize(model);
+    SNNFTYPE *ret = forward(model, data);
     for(int i=0;i<2;i++){
-        printf("%d ", ret[i]);
+        printf("%f ", ret[i]);
     }
     printf("\n");
     free(ret);
