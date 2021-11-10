@@ -13,11 +13,12 @@ EXT = .c
 SRCDIR = src
 OBJDIR = obj
 INCDIR = include
+DEPDIR = deps
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
-DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
+DEP = $(OBJ:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
 # UNIX-based OS variables & settings
 RM = rm
 DELOBJ = $(OBJ)

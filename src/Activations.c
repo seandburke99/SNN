@@ -43,22 +43,20 @@ void Sigmoid(SNNFTYPE *data, size_t size){
 
 void TanH(SNNFTYPE* data,  size_t size){
     for(int i=0;i<size;i++){
-        printf("data[%d]: %d\n",i,data[i]);
         data[i] = (SNNFTYPE)(tanh_lut_lookup(data[i]));
-        printf("data[%d]: %d\n",i,data[i]);
     }
     printf("\n");
 }
 
 int32_t sigmoid_lut_lookup(int32_t value) {
-    value /= 255/48;
-    if(abs(value)>255){
+    value /= 38;
+    if(abs(value)>=384){
         if(value<0) return 0;
-        else return 255;
+        else return 127;
     }
     if(value < 0){
         value *= -1;
-        return 255 - sigmoid_table_uint16[value];
+        return 128 - sigmoid_table_uint16[value];
     }
     return sigmoid_table_uint16[value];
 }
