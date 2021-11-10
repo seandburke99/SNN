@@ -36,15 +36,11 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME) $(LIB)
+all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-
-# Builds the static lib
-$(LIB): $(OBJ)
-	$(LIBCC) $(LIBFLAGS) $@ $^
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)
@@ -56,6 +52,10 @@ $(LIB): $(OBJ)
 # Building rule for .o files and its .c/.cpp in combination with all .h
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 	$(CC) $(CXXFLAGS) -o $@ -c $< $(LDFLAGS)
+
+# Builds the static lib
+SNN.a: $(OBJ)
+	$(LIBCC) $(LIBFLAGS) $(LIBDIR)/$@ $^
 
 ####################   Cleaning rules   #####################
 # Cleans complete project
