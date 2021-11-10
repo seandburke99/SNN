@@ -9,8 +9,9 @@ git clone https://github.com/seandburke99/SNN.git -b <branch_name>
 `
 Move into base directory and invoke make command
 `
-make
+make SNN.a
 `
+This will build a static lib. To build for a specific file, just call make and have main.c in the source dir
 
 ## License
 MIT License
