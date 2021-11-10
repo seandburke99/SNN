@@ -44,7 +44,7 @@ $(APPNAME): $(OBJ)
 
 # Builds the static lib
 $(LIB): $(OBJ)
-	$(LIBCC) $(LIBFLAGS) $(LIB) $(OBJ)
+	$(LIBCC) $(LIBFLAGS) $@ $^
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)
