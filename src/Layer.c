@@ -6,8 +6,6 @@ SNNFTYPE* layer_forward(const Layer* l, const SNNFTYPE* data){
     SNNFTYPE* _data = calloc(l->dims[1],sizeof(SNNFTYPE));
     size_t offset = l->dims[0];
     unsigned int index;
-    for(int i=0;i<l->dims[0];i++) printf("%f ", data[i]);
-    printf("\n");
     for(int i=0;i<l->dims[1];i++){
         _data[i] = (double)l->bias[i];
         for(int j=0;j< l->dims[0];j++){

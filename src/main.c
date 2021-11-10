@@ -7,12 +7,15 @@
 Graph *init_test(void);
 
 int main(void){
-    SNNFTYPE data[] = {1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
+    SNNFTYPE *data = calloc(8, sizeof(SNNFTYPE));
+    for(int i=0;i<8;i++){
+        data[i] = 51;
+    }
     Graph *model = init_test();
     //graph_summarize(model);
     SNNFTYPE *ret = forward(model, data);
     for(int i=0;i<2;i++){
-        printf("%f ", ret[i]);
+        printf("%d ", ret[i]);
     }
     printf("\n");
     free(ret);

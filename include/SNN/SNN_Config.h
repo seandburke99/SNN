@@ -3,8 +3,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define SNNTYPE float
-#define SNNFTYPE double
+#define SNNTYPE int8_t
+#define SNNFTYPE int32_t
 //#define MULTITHREADING
 
 #endif

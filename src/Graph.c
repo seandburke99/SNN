@@ -29,13 +29,13 @@ void graph_summarize(const Graph* model){
             sum *= model->layers[i].dims[j];
         }
         for(int j=0;j<sum;j++){
-            printf("%f ", model->layers[i].weights[j]);
+            printf("%d ", model->layers[i].weights[j]);
             if(j && !(j%model->layers[i].dims[model->layers[i].numDims-1]))
                 printf("\n");
         }
         printf("\nBias: %d\n", numbias);
         for(int j=0;j<numbias;j++){
-            printf("%f ", model->layers[i].bias[j]);
+            printf("%d ", model->layers[i].bias[j]);
         }
         printf("\n");
     }
