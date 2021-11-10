@@ -7,6 +7,10 @@ CC = gcc
 CXXFLAGS = -std=c11 -Wall
 LDFLAGS = -I$(INCDIR) -lm
 
+LIBCC = ar
+LIBFLAGS = rcs
+LIBDIR = build
+
 # Makefile settings - Can be customized.
 APPNAME = SNN
 EXT = .c
@@ -19,6 +23,7 @@ DEPDIR = deps
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 DEP = $(OBJ:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
+LIB = $(LIBDIR)/$(APPNAME).a
 # UNIX-based OS variables & settings
 RM = rm
 DELOBJ = $(OBJ)
@@ -31,11 +36,15 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(APPNAME)
+all: $(APPNAME) $(LIB)
 
 # Builds the app
 $(APPNAME): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+
+# Builds the static lib
+$(LIB): $(OBJ)
+	$(LIBCC) $(LIBFLAGS) $(LIB) $(OBJ)
 
 # Creates the dependecy rules
 %.d: $(SRCDIR)/%$(EXT)
@@ -48,26 +57,13 @@ $(APPNAME): $(OBJ)
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
 	$(CC) $(CXXFLAGS) -o $@ -c $< $(LDFLAGS)
 
-#################### Cleaning rules for Windows OS #####################
+####################   Cleaning rules   #####################
 # Cleans complete project
 .PHONY: clean
 clean:
-# $(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
+	$(RM) $(DELOBJ) $(APPNAME) $(LIB)
 
 # Cleans only all files with the extension .d
 .PHONY: cleandep
 cleandep:
-# $(DEL) $(DEP)
-	$(RM) $(DEP)
-
-#################### Cleaning rules for Mac OS #####################
-# Cleans complete project
-.PHONY: cleanm
-cleanm:
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
-
-# Cleans only all files with the extension .d
-.PHONY: cleandepm
-cleandepm:
 	$(RM) $(DEP)
