@@ -4,8 +4,8 @@
 
 # Compiler settings - Can be customized.
 CC = gcc
-CXXFLAGS = -std=c11 -Wall
-LDFLAGS = -I$(INCDIR) -lm
+CXXFLAGS = -std=c11 -Wall -I$(INCDIR)
+LDFLAGS = -lm
 
 LIBCC = ar
 LIBFLAGS = rcs
