@@ -18,6 +18,7 @@ SRCDIR = src
 OBJDIR = obj
 INCDIR = include
 DEPDIR = deps
+BINDIR = bin
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
