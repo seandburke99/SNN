@@ -29,19 +29,19 @@ static const int16_t sigmoid_table_uint16[384] = {
     126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,127
 };
 
-void ReLu(SNNFTYPE *data, size_t size){
+void act_relu(SNNFTYPE *data, size_t size){
     for(int i=0;i<size;i++){
         if(data[i]<0) data[i]=0; // x<=0: y=x, x>0:y=x
     }
 }
 
-void Sigmoid(SNNFTYPE *data, size_t size){
+void act_sigmoid(SNNFTYPE *data, size_t size){
     for(int i=0;i<size;i++){
         data[i] = 255.0/(1.0+exp(-data[i]/255.0));
     }
 }
 
-void TanH(SNNFTYPE* data,  size_t size){
+void act_tanh(SNNFTYPE* data,  size_t size){
     for(int i=0;i<size;i++){
         data[i] = (SNNFTYPE)(tanh_lut_lookup(data[i]));
     }

@@ -22,7 +22,7 @@
  *
  * returns: None
  */
-void ReLu(SNNFTYPE* data, size_t size);
+void act_relu(SNNFTYPE* data, size_t size);
 
 /*
  * Implements a modified Sigmoid function on input data that scales the value from 0 to 32767
@@ -32,7 +32,7 @@ void ReLu(SNNFTYPE* data, size_t size);
  *
  * returns: None
  */
-void Sigmoid(SNNFTYPE *data, size_t size);
+void act_sigmoid(SNNFTYPE *data, size_t size);
 
 /*
  * Implements a modified TanH function on input data that scales the value to the positive
@@ -42,7 +42,7 @@ void Sigmoid(SNNFTYPE *data, size_t size);
  *
  * returs: None
  */
-void TanH(SNNFTYPE *data, size_t size);
+void act_tanh(SNNFTYPE *data, size_t size);
 
 /* 
  *

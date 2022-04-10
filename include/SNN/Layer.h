@@ -9,8 +9,7 @@ typedef void(*ActivationFunction)(SNNFTYPE *data, size_t size);
 //Layer structure
 typedef struct Layer{
     char *name; //Name of the layer (unlikely to be useful on embedded devices)
-    size_t *dims; //Pointer to array that defines dimension sizes
-    size_t numDims; //Number of dimensions to layer
+    size_t dims[2];
     SNNTYPE *weights; //Pointer to flat weights buffer (Possible change to matrix)
     SNNTYPE *bias;
     ActivationFunction act; //Pointer to activation function
@@ -23,14 +22,14 @@ typedef struct Layer{
  *
  * returns: pointer to new data array
  */
-SNNFTYPE* layer_forward(const Layer *l, const SNNFTYPE *data);
+uint8_t layer_forward(const Layer *l, const SNNFTYPE *data, SNNFTYPE *result);
 
 /*
  * Function that is meant to create a new layer, initialized to 0
  *
- * returns: Pointer to new layer structure
+ * returns: New layer structure
  */
-Layer create_layer();
+Layer layer_create();
 
 /*
  * Function that is meant to free all memory associated with layer structure pointer
@@ -38,16 +37,6 @@ Layer create_layer();
  *
  * returns: n/a
  */
-void destroy_layer(Layer *l);
+void layer_destroy(Layer *l);
 
 #endif
-
-/*
- *
- * Neural network linear structure has previous size across and current size down
- * For example, 8->10 nodes has the matrix shape [10,8] 10 rows, 8 columns
- * For example, 10->2 nodes has the matrix shape [2, 10] 2 rows, 10 columns
- * Following this logic, the next layers first node has it valued multiplied by the first row of weights
- * based on how the sizes line up.
- * 
-*/

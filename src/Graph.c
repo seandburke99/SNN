@@ -2,43 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-SNNFTYPE* forward(const Graph* model, const SNNFTYPE* data){
-    SNNFTYPE* d1;
-    SNNFTYPE* d2;
-    d1 = layer_forward(&model->layers[0], data);
+uint8_t forward(const Graph* model, const SNNFTYPE* data, SNNFTYPE *result){
+    SNNFTYPE *d1 = NULL, *d2 = NULL;
+    layer_forward(&model->layers[0], data, d1);
     for(int i=1;i<model->numLayers;i++){
-        d2 = layer_forward(&model->layers[i], d1);
+        layer_forward(&model->layers[i], d1, d2);
         free(d1);
         d1 = d2;
     }
-    return d1;
-}
-
-void graph_summarize(const Graph* model){
-    if(model->name != NULL)
-        printf("%s\n\n", model->name);
-    for(int i=0;i<model->numLayers;i++){
-        if(model->layers[i].name)
-            printf("%s: ", model->layers[i].name);
-        printf("%zd dims = ", model->layers[i].numDims);
-        printf("%zdx%zd\n", model->layers[i].dims[0], model->layers[i].dims[1]);
-        int numbias = model->layers[i].dims[1];
-        printf("Weights:\n");
-        int sum = 1;
-        for(int j=0;j<model->layers[i].numDims;j++){
-            sum *= model->layers[i].dims[j];
-        }
-        for(int j=0;j<sum;j++){
-            printf("%d ", model->layers[i].weights[j]);
-            if(j && !(j%model->layers[i].dims[model->layers[i].numDims-1]))
-                printf("\n");
-        }
-        printf("\nBias: %d\n", numbias);
-        for(int j=0;j<numbias;j++){
-            printf("%d ", model->layers[i].bias[j]);
-        }
-        printf("\n");
-    }
+    result = d1;
+    return 0;
 }
 
 Graph* create_graph(){
