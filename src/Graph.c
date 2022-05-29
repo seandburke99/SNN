@@ -14,7 +14,7 @@ uint8_t forward(const Graph* model, const SNNFTYPE* data, SNNFTYPE *result){
     return 0;
 }
 
-Graph* create_graph(){
+Graph* graph_create(){
     Graph* model = malloc(sizeof(Graph));
     model->name = NULL;
     model->layers = NULL;
@@ -22,7 +22,7 @@ Graph* create_graph(){
     return model;
 }
 
-uint8_t add_layer(Graph* model, Layer l){
+uint8_t graph_add_layer(Graph* model, Layer l){
     Layer* ls = calloc((model->numLayers+1), sizeof(Layer));
     if(model->numLayers){
         memcpy(ls, model->layers, sizeof(Layer)*model->numLayers);
@@ -33,9 +33,9 @@ uint8_t add_layer(Graph* model, Layer l){
     return 0;
 }
 
-void destroy_graph(Graph* model){
+void graph_destroy(Graph* model){
     for(int i=0;i<model->numLayers;i++){
-        destroy_layer(&model->layers[i]);
+        layer_destroy(&model->layers[i]);
     }
     free(model->layers);
     free(model);

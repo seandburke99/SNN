@@ -4,7 +4,7 @@
 
 # Compiler settings - Can be customized.
 CC = gcc
-CXXFLAGS = -std=c11 -Wall -I$(INCDIR)
+CXXFLAGS = -std=c11 -Wall -g -I$(INCDIR)
 LDFLAGS = -lm
 
 LIBCC = ar
@@ -27,7 +27,7 @@ OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 DEP = $(OBJ:$(OBJDIR)/%.o=$(DEPDIR)/%.d)
 LIB = $(LIBDIR)/$(APPNAME).a
 # UNIX-based OS variables & settings
-RM = rm
+RM = rm -r
 DELOBJ = $(OBJ)
 # Windows OS variables & settings
 DEL = del
@@ -66,7 +66,7 @@ SNN.a: $(OBJ)
 # Cleans complete project
 .PHONY: clean
 clean:
-	$(RM) $(DELOBJ) $(BINDIR)/$(APPNAME)
+	$(RM) $(DIRS)
 
 # Cleans only all files with the extension .d
 .PHONY: cleandep
