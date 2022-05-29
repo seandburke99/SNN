@@ -17,8 +17,9 @@ EXT = .c
 SRCDIR = src
 OBJDIR = obj
 INCDIR = include
-DEPDIR = deps
+DEPDIR = dep
 BINDIR = bin
+DIRS = $(BINDIR) $(DEPDIR) $(OBJDIR)
 
 ############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
@@ -37,9 +38,9 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: bin $(APPNAME)
+all: $(DIRS) $(APPNAME)
 
-bin:
+$(DIRS):
 	mkdir -p $@
 
 # Builds the app
@@ -47,15 +48,15 @@ $(APPNAME): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $(BINDIR)/$@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
-%.d: $(SRCDIR)/%$(EXT)
-	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@ $(LDFLAGS)
+$(DEPDIR)/%.d: $(SRCDIR)/%$(EXT)
+	@$(CPP) $(CFLAGS) $< -MM -MT $(@:$(DEPDIR)/%.d=$(OBJDIR)/%.o) >$@
 
 # Includes all .h files
 -include $(DEP)
 
 # Building rule for .o files and its .c/.cpp in combination with all .h
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CXXFLAGS) -o $@ -c $< $(LDFLAGS)
+	$(CC) $(CXXFLAGS) -o $@ -c $<
 
 # Builds the static lib
 SNN.a: $(OBJ)
@@ -65,7 +66,7 @@ SNN.a: $(OBJ)
 # Cleans complete project
 .PHONY: clean
 clean:
-	$(RM) $(DELOBJ) $(APPNAME) $(LIB)
+	$(RM) $(DELOBJ) $(BINDIR)/$(APPNAME)
 
 # Cleans only all files with the extension .d
 .PHONY: cleandep
