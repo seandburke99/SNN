@@ -2,31 +2,21 @@
 #include <SNN/Activations.h>
 #include <stdio.h>
 
-uint8_t layer_forward(const Layer* l, const SNNFTYPE* data, SNNFTYPE *result){
-    result = (SNNFTYPE*)calloc(l->dims[1],sizeof(SNNFTYPE));
-    size_t offset = l->dims[0];
-    unsigned int index;
-    for(int i=0;i<l->dims[1];i++){
-        result[i] = (double)l->bias[i];
-        for(int j=0;j< l->dims[0];j++){
-            index = (i*offset) + j;
-            result[i] += data[j]*l->weights[index];
-        }
+Layer *layer_create(size_t inDim, size_t outDim, ActivationFunction actFunc, const SNNTYPE **im){
+    Layer *l = calloc(1, sizeof(Layer));
+    l->act = actFunc;
+    if(im){
+        l->weights = mat_arr_init(outDim, inDim, im);
+    }else{
+        l->weights = mat_init(outDim, inDim);
     }
-    l->act(result, l->dims[1]);
-    return 0;
-}
-
-Layer layer_create(){
-    //Create a layer and initialize all the pointers to 0
-    Layer l;
-    l.act = NULL;
-    l.name = NULL;
-    l.weights = NULL;
     return l;
 }
 
+Vector *layer_forward(const Layer* l, const Vector *data){
+    return l->act(vecxmatdot(data, l->weights));
+}
+
 void layer_destroy(Layer *l){
-    free(l->weights);
-    free(l->dims);
+    return;
 }
