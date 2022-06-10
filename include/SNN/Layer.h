@@ -12,10 +12,9 @@ typedef struct Layer{
     ActivationFunction act;
 } Layer;
 
-Layer *layer_create(size_t inDim, size_t outDim, ActivationFunction actFunc, const SNNTYPE **im);
-
+Layer *layer_create(size_t inDim, size_t outDim, ActivationFunction actFunc, const SNNTYPE im[outDim][inDim]);
 Vector *layer_forward(const Layer* l, const Vector *data);
-
+Layer *layer_copy(const Layer *l);
 void layer_destroy(Layer *l);
 
 #endif

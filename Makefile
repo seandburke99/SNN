@@ -38,7 +38,7 @@ WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 ####################### Targets beginning here #########################
 ########################################################################
 
-all: $(DIRS) $(APPNAME)
+all: $(APPNAME)
 
 $(DIRS):
 	mkdir -p $@
@@ -48,7 +48,7 @@ $(APPNAME): $(OBJ)
 	$(CC) $(CXXFLAGS) -o $(BINDIR)/$@ $^ $(LDFLAGS)
 
 # Creates the dependecy rules
-$(DEPDIR)/%.d: $(SRCDIR)/%$(EXT)
+$(DEPDIR)/%.d: $(SRCDIR)/%$(EXT) $(DIRS)
 	@$(CPP) $(CFLAGS) $< -MM -MT $(@:$(DEPDIR)/%.d=$(OBJDIR)/%.o) >$@
 
 # Includes all .h files
